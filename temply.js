@@ -44,8 +44,6 @@ More info at: http://mathiaskarstaedt.de
       template.removeAttribute("tp-repeat");
       template.removeAttribute("tp-model");
       var repeat = el.getAttribute("tp-repeat");
-      console.log(repeat);
-      console.log(this.context);
       var model = el.getAttribute("tp-model");
       var result = document.createDocumentFragment();
       for (var j = 0; j < this.context[repeat].length; j++) {
