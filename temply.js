@@ -1,3 +1,7 @@
+/*!
+Temply.js version 0.01 -- by Mathias Karstädt
+More info at: http://mathiaskarstaedt.de
+*/
 ;(function (window, document, undefined) {
 
   var Temply = function(context) {
