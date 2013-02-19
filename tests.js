@@ -20,3 +20,15 @@ test("should repeat tp-repeat tags", function() {
   temply.run();
   equal($("#qunit-fixture").html(), "<div><span tp-model=\"entry.name\">Hello</span></div><div><span tp-model=\"entry.name\">World</span></div>", "tag repeated");
 });
+
+test("should check input field and fill data into template tags", function() {
+  $("#qunit-fixture").append($("<input type=\"text\" tp-model=\"test\" />"));
+  $("#qunit-fixture").append("{{test}}");
+  var temply = new Temply({});
+  temply.run();
+  var input = $('#qunit-fixture input');
+  input.val("A");
+  keyvent.on(input[0]).up();
+  equal($("#qunit-fixture").html(), "<input tp-model=\"test\" type=\"text\"><span tp-model=\"test\">A</span>", "input tag success");
+});
+
