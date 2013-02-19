@@ -7,7 +7,9 @@
   }
 
   Temply.prototype.init = function() {
-    document.body.innerHTML = document.body.innerHTML.replace(/{{([^}]*)}}/g, this.replacer.bind(this));
+    this.replaceTags(document.body);
+    this.initRepeats();
+    this.initModels();
     var inputs = document.querySelectorAll("input[tp-model]");
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].addEventListener("keyup", this.inputChange.bind(this));
@@ -17,28 +19,68 @@
   Temply.prototype.inputChange = function(input) {
     var model = input.target.getAttribute("tp-model");
     eval("this.context." + model + " = input.target.value");
-    this.updateToken(model);
+    this.updateToken(document, model, this.context);
   }
 
-  Temply.prototype.replacer = function(match, p1, offset, string) {
-    if (this.tokens.indexOf(p1) == -1) this.tokens.push(p1);
-    return "<span tp-model='" + p1 + "'></span>";
+  Temply.prototype.replaceTags = function(element) {
+    element.innerHTML = element.innerHTML.replace(/{{([^}]*)}}/g, function(match, p1, offset, string) {
+      return "<span tp-model='" + p1 + "'></span>";
+    });
+    return element;
   }
 
-  Temply.prototype.updateToken = function(model) {
-    var elements = document.querySelectorAll("*[tp-model='" + model + "']");
+  Temply.prototype.initRepeats = function() {
+    var elements = document.querySelectorAll("*[tp-repeat]");
     for (var i = 0; i < elements.length; i++) {
-      var value = eval("this.context." + model) || "";
-      if(elements[i].tagName == "INPUT")
-        elements[i].value = value;
-      else
-        elements[i].textContent = value;
+      var el = elements[i];
+      var template = this.replaceTags(el.cloneNode(true));
+      template.removeAttribute("tp-repeat");
+      template.removeAttribute("tp-model");
+      var repeat = el.getAttribute("tp-repeat");
+      var model = el.getAttribute("tp-model");
+      var result = document.createDocumentFragment();
+      for (var j = 0; j < this.context[repeat].length; j++) {
+        var entry = this.context[repeat][j];
+        var context = {}
+        context[model] = entry;
+        var node = template.cloneNode(true);
+        for(var key in entry) {
+          this.updateToken(node, model + "." + key, context);
+        }
+        result.appendChild(node);
+      };
+      el.parentNode.replaceChild(result, el);
+    };
+  }
+
+  Temply.prototype.initModels = function() {
+    var elements = document.querySelectorAll("*[tp-model]");
+    for(var i = 0; i < elements.length; i++) {
+      var el = elements[i];
+      var model = el.getAttribute("tp-model");
+      if (this.tokens.indexOf(model) == -1) this.tokens.push(model);
+    }
+  }
+
+  Temply.prototype.updateToken = function(element, model, context) {
+    var elements = element.querySelectorAll("*[tp-model='" + model + "']");
+    for (var i = 0; i < elements.length; i++) {
+      var element = elements[i];
+      if (!element.hasAttribute("tp-repeat")) {
+        try {
+          var value = eval("context." + model) || "";
+          if(element.tagName == "INPUT")
+            element.value = value;
+          else
+            element.textContent = value;
+        } catch(e) {};
+      }
     }
   }
 
   Temply.prototype.run = function() {
     this.tokens.forEach(function(token) {
-      this.updateToken(token);
+      this.updateToken(document, token, this.context);
     }, this);
   }
 

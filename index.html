@@ -19,6 +19,13 @@
 
   Change the title of this page: <input type="text" tp-model="cool.title" />
 
+  <p>Das folgende wird wiederholt</p>
+
+  <table>
+    <tr tp-repeat="entries" tp-model="entry">
+      <td width="100">{{entry.name}}</td><td width="100">{{entry.age}}</td><td>{{cool.test}}</td>
+    </tr>
+  </table>
 
   <script type="text/javascript" src="temply.js"></script>
   <script type="text/javascript">
@@ -28,7 +35,12 @@
       name: "World",
       cool: {
         more: "More..."
-      }
+      },
+      entries: [
+        {name: "Mathias", age: "36 Jahre alt"},
+        {name: "Mandy", age: "35 Jahre alt"},
+        {name: "Hans", age: "66 Jahre alt"}
+      ]
     });
     temply.run();
   });
