@@ -3,6 +3,13 @@ Temply
 
 a micro JavaScript template framework
 
+Description
+-----------
+
+Temply does not depend on other frameworks like jQuery or Prototype.js!
+
+It should run on most modern browsers like Firefox, Safari and Google Chrome.
+
 -----
 
 Copyright 2013 Mathias Karstädt
