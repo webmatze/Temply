@@ -4,6 +4,8 @@ More info at: http://mathiaskarstaedt.de
 */
 ;(function (window, document, undefined) {
 
+  "use strict";
+
   var Temply = function(context) {
     this.context = context;
     this.tokens = new Array();
