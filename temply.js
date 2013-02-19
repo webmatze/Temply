@@ -6,17 +6,18 @@ More info at: http://mathiaskarstaedt.de
 
   "use strict";
 
-  var Temply = function(context) {
+  var Temply = function(context, element) {
+    this.rootElement = element || document.body;
     this.context = context;
     this.tokens = new Array();
     this.init();
   }
 
   Temply.prototype.init = function() {
-    this.replaceTags(document.body);
+    this.replaceTags(this.rootElement);
     this.initRepeats();
     this.initModels();
-    var inputs = document.querySelectorAll("input[tp-model]");
+    var inputs = this.rootElement.querySelectorAll("input[tp-model]");
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].addEventListener("keyup", this.inputChange.bind(this));
     }
@@ -25,7 +26,7 @@ More info at: http://mathiaskarstaedt.de
   Temply.prototype.inputChange = function(input) {
     var model = input.target.getAttribute("tp-model");
     eval("this.context." + model + " = input.target.value");
-    this.updateToken(document, model, this.context);
+    this.updateToken(this.rootElement, model, this.context);
   }
 
   Temply.prototype.replaceTags = function(element) {
@@ -36,13 +37,15 @@ More info at: http://mathiaskarstaedt.de
   }
 
   Temply.prototype.initRepeats = function() {
-    var elements = document.querySelectorAll("*[tp-repeat]");
+    var elements = this.rootElement.querySelectorAll("*[tp-repeat]");
     for (var i = 0; i < elements.length; i++) {
       var el = elements[i];
       var template = this.replaceTags(el.cloneNode(true));
       template.removeAttribute("tp-repeat");
       template.removeAttribute("tp-model");
       var repeat = el.getAttribute("tp-repeat");
+      console.log(repeat);
+      console.log(this.context);
       var model = el.getAttribute("tp-model");
       var result = document.createDocumentFragment();
       for (var j = 0; j < this.context[repeat].length; j++) {
@@ -60,7 +63,7 @@ More info at: http://mathiaskarstaedt.de
   }
 
   Temply.prototype.initModels = function() {
-    var elements = document.querySelectorAll("*[tp-model]");
+    var elements = this.rootElement.querySelectorAll("*[tp-model]");
     for(var i = 0; i < elements.length; i++) {
       var el = elements[i];
       var model = el.getAttribute("tp-model");
@@ -78,7 +81,7 @@ More info at: http://mathiaskarstaedt.de
           if(element.tagName == "INPUT")
             element.value = value;
           else
-            element.textContent = value;
+            element.innerHTML = value;
         } catch(e) {};
       }
     }
@@ -86,7 +89,7 @@ More info at: http://mathiaskarstaedt.de
 
   Temply.prototype.run = function() {
     this.tokens.forEach(function(token) {
-      this.updateToken(document, token, this.context);
+      this.updateToken(this.rootElement, token, this.context);
     }, this);
   }
 
