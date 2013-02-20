@@ -32,3 +32,10 @@ test("should check input field and fill data into template tags", function() {
   equal($("#qunit-fixture").html(), "<input tp-model=\"test\" type=\"text\"><span tp-model=\"test\">A</span>", "input tag success");
 });
 
+test("should replace {{value}} template tags within tag attributes", function() {
+  $("#qunit-fixture").append($("<a href=\"{{url}}\">Test</a>"));
+  var temply = new Temply({url: "http://google.com"});
+  temply.run();
+  equal($("#qunit-fixture").html(), "<a href=\"http://google.com\">Test</a>", "attribute success");
+});
+

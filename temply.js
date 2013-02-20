@@ -14,8 +14,8 @@ More info at: http://mathiaskarstaedt.de
   }
 
   Temply.prototype.init = function() {
-    this.replaceTags(this.rootElement);
     this.initRepeats();
+    this.replaceTags(this.rootElement, this.context);
     this.initModels();
     var inputs = this.rootElement.querySelectorAll("input[tp-model]");
     for (var i = 0; i < inputs.length; i++) {
@@ -29,10 +29,15 @@ More info at: http://mathiaskarstaedt.de
     this.updateToken(this.rootElement, model, this.context);
   }
 
-  Temply.prototype.replaceTags = function(element) {
-    element.innerHTML = element.innerHTML.replace(/{{([^}]*)}}/g, function(match, p1, offset, string) {
-      return "<span tp-model='" + p1 + "'></span>";
-    });
+  Temply.prototype.replaceTags = function(element, context) {
+    element.innerHTML = element.innerHTML.replace(/="{{([^}]*)}}"/g, (function(match, p1, offset, string) {
+      var value = eval("this." + p1) || "";
+      return "=\"" + value + "\"";
+    }).bind(context));
+    element.innerHTML = element.innerHTML.replace(/{{([^}]*)}}/g, (function(match, p1, offset, string) {
+      var value = eval("this." + p1) || "";
+      return "<span tp-model='" + p1 + "'>" + value + "</span>";
+    }).bind(context));
     return element;
   }
 
@@ -40,9 +45,6 @@ More info at: http://mathiaskarstaedt.de
     var elements = this.rootElement.querySelectorAll("*[tp-repeat]");
     for (var i = 0; i < elements.length; i++) {
       var el = elements[i];
-      var template = this.replaceTags(el.cloneNode(true));
-      template.removeAttribute("tp-repeat");
-      template.removeAttribute("tp-model");
       var repeat = el.getAttribute("tp-repeat");
       var model = el.getAttribute("tp-model");
       var result = document.createDocumentFragment();
@@ -50,11 +52,14 @@ More info at: http://mathiaskarstaedt.de
         var entry = this.context[repeat][j];
         var context = {}
         context[model] = entry;
-        var node = template.cloneNode(true);
+        var template = el.cloneNode(true);
+        template.removeAttribute("tp-repeat");
+        template.removeAttribute("tp-model");
         for(var key in entry) {
-          this.updateToken(node, model + "." + key, context);
+          this.updateToken(template, model + "." + key, context);
         }
-        result.appendChild(node);
+        template = this.replaceTags(template, context);
+        result.appendChild(template);
       };
       el.parentNode.replaceChild(result, el);
     };
