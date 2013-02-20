@@ -57,34 +57,56 @@
           <h3>Text Template Tags</h3>
           <p>This is the simplest way to include Temply.js template tags into your HTML pages.</p>
           <p>You can include the template tags as <code>{{name}}</code> nearly everywhere in your HTML page.</p>
-          <pre>
-&lt;div id="data"&gt;
+          <pre>&lt;div id="data"&gt;
   &lt;h1&gt;<strong>{{title}}</strong>&lt;/h1&gt;
   &lt;p&gt;<strong>{{content}}</strong>&lt;/p&gt;
   &lt;a href="<strong>{{url}}</strong>"&gt;<strong>{{link_name}}</strong>&lt;/a&gt;
-&lt;/div&gt;
-          </pre>
+&lt;/div&gt;</pre>
           <h3>Tag Attribute Template Tags</h3>
           <p>A second and cleaner way is to use the following attribute <code>tp-model="name"</code> on any HTML tag. But this can not be used to set the values of other tag attributes like <code>href=""</code> in the following example. But you can use the <strong>Text Template Tag</strong> here.</p>
-          <pre>
-&lt;div id="data"&gt;
-  &lt;h1 tp-model="title"&gt;&lt;/h1&gt;
-  &lt;p tp-model="content"&gt;&lt;/p&gt;
-  &lt;a href="<strong>{{url}}</strong>" tp-model="link_name"&gt;&lt;/a&gt;
-&lt;/div&gt;
-          </pre>
+          <pre>&lt;div id="data"&gt;
+  &lt;h1 <strong>tp-model="title"</strong>&gt;&lt;/h1&gt;
+  &lt;p <strong>tp-model="content"</strong>&gt;&lt;/p&gt;
+  &lt;a href="<strong>{{url}}</strong>" <strong>tp-model="link_name"</strong>&gt;&lt;/a&gt;
+&lt;/div&gt;</pre>
           <h3>Replacing Template Tags With Data</h3>
           <p>When all template tags are placed you can replace those tags using Temply.js with dynamic data:</p>
-          <pre>
-var data = {
+          <pre>var data = {
   title: "Hello World",
   content: "Lorem ipsum...",
   url: "http://example.com",
   link_name: "Example.com"
 };
 var temply = new Temply(data, document.getElementById("data"));
-temply.run();
-          </pre>
+temply.run();</pre>
+          <h3>Repeating content</h3>
+          <p>It is also simple to automatically repeat elements and fill them with data from arrays. You only need one extra attribute <code>tp-repeat="entries"</code> and the <code>tp-model="entry"</code> attribute.</p>
+          <p>Here is an simple example.</p>
+          <h4>HTML code:</h4>
+          <pre>&lt;div id="data" <strong>tp-repeat="entries" tp-model="entry"</strong>&gt;
+  &lt;h1 <strong>tp-model="entry.title"</strong>&gt;&lt;/h1&gt;
+  &lt;p <strong>tp-model="entry.content"</strong>&gt;&lt;/p&gt;
+  &lt;a href="<strong>{{entry.url}}</strong>" <strong>tp-model="entry.link_name"</strong>&gt;&lt;/a&gt;
+&lt;/div&gt;</pre>
+          <h4>JavaScript code:</h4>
+          <pre>var data = {
+  entries: [
+    {
+      title: "First Entry",
+      content: "Lorem ipsum...",
+      url: "http://example.com",
+      link_name: "Example.com"
+    },
+    {
+      title: "Second Entry",
+      content: "Lorem ipsum...",
+      url: "http://example.com",
+      link_name: "Example.com"
+    }
+  ]
+};
+var temply = new Temply(data, document.getElementById("data"));
+temply.run();</pre>
         </section>
         <hr class="bs-docs-separator" />
         <section id="demo">
