@@ -32,6 +32,7 @@ FeedReader.prototype.loadStories = function(feed) {
   feed.load((function(result) {
     var storiesElementClone = this.storiesElement.cloneNode(true);
     this.storiesTemplate = new Temply(result.feed, storiesElementClone);
+    this.storiesTemplate.run();
     var storiesElement = document.getElementById("stories");
     storiesElement.parentNode.replaceChild(storiesElementClone, storiesElement);
   }).bind(this));
