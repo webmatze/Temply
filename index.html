@@ -57,9 +57,11 @@
   window.addEventListener("load", function() {
 
     var reader = new FeedReader([
+      {name: "Hacker News", url: "http://news.ycombinator.com/rss"},
       {name: "Railscasts", url: "http://feeds.feedburner.com/railscasts"},
       {name: "Google Blog", url: "http://googleblog.blogspot.com/atom.xml"},
-      {name: "Engadget", url: "http://feeds.engadget.com/weblogsinc/engadget"}
+      {name: "Engadget", url: "http://feeds.engadget.com/weblogsinc/engadget"},
+      {name: "Techcrunch", url: "http://feeds.feedburner.com/Techcrunch"}
     ]);
 
   });
