@@ -29,13 +29,79 @@
     <div class="row-fluid">
       <div id="feeds" class="span2">
         <ul class="nav nav-pills nav-stacked">
-          <li class="nav-header">Links</li>
-          <li><a href="http://webmatze.github.com/Temply/">Home</a></li>
-          <li><a href="demos/feedreader.html">Feedreader Demo</a></li>
+          <li class="nav-header">Navigation</li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#license">License</a></li>
         </ul>
       </div>
       <div id="content" class="span10">
+        <section id="about">
+          <h2>About Temply.js</h2>
+          <p class="lead">Temply.js is a small templating engine using vanilla JavaScript.</p>
+          <p class="lead">It does not depend on any other framework such as jQuery, Prototype.js or other. But it can be used with any of them.</p>
+          <h3>Requirements</h3>
+          <p>Temply.js should work with most modern browsers. It has been tested with this following browsers:</p>
+          <ul>
+            <li class="text-success">Firefox 18 (Mac)</li>
+            <li class="text-success">Safari 6 (Mac)</li>
+            <li class="text-success">Google Chrome 23 (Mac)</li>
+          </ul>
+          <p>But other versions or browsers could work, too.</p>
+        </section>
+        <hr class="bs-docs-separator" />
+        <section id="usage">
+          <h2>Usage</h2>
+          <p>Temply.js uses a simple template language that can be used in two different ways.</p>
+          <h3>Text Template Tags</h3>
+          <p>This is the simplest way to include Temply.js template tags into your HTML pages.</p>
+          <p>You can include the template tags as <code>{{name}}</code> nearly everywhere in your HTML page.</p>
+          <pre>
+&lt;div id="data"&gt;
+  &lt;h1&gt;<strong>{{title}}</strong>&lt;/h1&gt;
+  &lt;p&gt;<strong>{{content}}</strong>&lt;/p&gt;
+  &lt;a href="<strong>{{url}}</strong>"&gt;<strong>{{link_name}}</strong>&lt;/a&gt;
+&lt;/div&gt;
+          </pre>
+          <h3>Tag Attribute Template Tags</h3>
+          <p>A second and cleaner way is to use the following attribute <code>tp-model="name"</code> on any HTML tag. But this can not be used to set the values of other tag attributes like <code>href=""</code> in the following example. But you can use the <strong>Text Template Tag</strong> here.</p>
+          <pre>
+&lt;div id="data"&gt;
+  &lt;h1 tp-model="title"&gt;&lt;/h1&gt;
+  &lt;p tp-model="content"&gt;&lt;/p&gt;
+  &lt;a href="<strong>{{url}}</strong>" tp-model="link_name"&gt;&lt;/a&gt;
+&lt;/div&gt;
+          </pre>
+          <h3>Replacing Template Tags With Data</h3>
+          <p>When all template tags are placed you can replace those tags using Temply.js with dynamic data:</p>
+          <pre>
+var data = {
+  title: "Hello World",
+  content: "Lorem ipsum...",
+  url: "http://example.com",
+  link_name: "Example.com"
+};
+var temply = new Temply(data, document.getElementById("data"));
+temply.run();
+          </pre>
+        </section>
+        <hr class="bs-docs-separator" />
+        <section id="demo">
+          <h2>Demo</h2>
+          <p>You can find a more complex demonstration of all features here: <a href="demos/feedreader.html">Feedreader Demo</a></p>
+        </section>
+        <hr class="bs-docs-separator" />
+        <section id="license">
+          <h2>License</h2>
+          <p>Copyright 2013 Mathias Karstädt <a href="http://webmatze.github.com/">http://webmatze.github.com/</a></p>
 
+          <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+          <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+          <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </section>
       </div>
     </div>
     <footer class="row-fluid footer">
