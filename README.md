@@ -10,6 +10,13 @@ Temply does not depend on other frameworks like jQuery or Prototype.js!
 
 It should run on most modern browsers like Firefox, Safari and Google Chrome.
 
+Usage and Demo
+--------------
+
+You can find more information and a demo on this page:
+
+http://webmatze.github.com/Temply/
+
 -----
 
 Copyright 2013 Mathias Karstädt
