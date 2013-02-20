@@ -3,19 +3,20 @@
 <head>
   <meta charset='utf-8'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSS Demo for Temply</title>
+  <title>Temply.js Micro Template Engine</title>
   <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
 </head>
 <body>
   <div class="navbar">
     <div class="navbar-inner">
       <div class="container">
-        <a class="brand" href="https://github.com/webmatze/Temply">Temply.js</a>
+        <a class="brand" href="http://temply.github.com">Temply.js</a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li><a href="https://github.com/webmatze/Temply">Home</a></li>
+            <li><a href="http://temply.github.com">Home</a></li>
+            <li><a href="demos/feedreader.html">Demo</a></li>
             <li><a href="https://github.com/webmatze/Temply/issues">Issues</a></li>
-            <li><a href="https://twitter.com/webmatze">@webmatze</a></li>
+            <li><a href="http://webmatze.github.com">by webmatze</a></li>
           </ul>
         </div>
       </div>
@@ -23,23 +24,18 @@
   </div>
   <div class="container">
     <div class="row-fluid page-header">
-      <h1>RSS Demo <small>for Temply Micro Template Engine</small></h1>
+      <h1>Temply.js <small>the Micro Template Engine</small></h1>
     </div>
     <div class="row-fluid">
       <div id="feeds" class="span2">
         <ul class="nav nav-pills nav-stacked">
-          <li class="nav-header">Available Feeds</li>
-          <li tp-repeat="feeds" tp-model="feed"><a href="javascript:void(0)" tp-model="feed.name"></a></li>
+          <li class="nav-header">Links</li>
+          <li><a href="http://temply.github.com">Home</a></li>
+          <li><a href="demos/feedreader.html">Feedreader Demo</a></li>
         </ul>
       </div>
-      <div id="stories" class="span10">
-        <div class="alert alert-info">Click on one of the RSS feeds on the left side to load the contents.</div>
-        <div class="story" tp-repeat="entries" tp-model="story">
-          <h3 tp-model="story.title"></h3>
-          <p tp-model="story.contentSnippet"></p>
-          <a href="{{story.link}}" tp-model="story.link"></a>
-          <hr class="bs-docs-separator" />
-        </div>
+      <div id="content" class="span10">
+
       </div>
     </div>
     <footer class="row-fluid footer">
@@ -47,25 +43,6 @@
       <h4>Copyright 2013 by Mathias Karstädt</h4>
     </footer>
   </div>
-
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script type="text/javascript" src="temply.js"></script>
-  <script type="text/javascript" src="demos/feedreader.js"></script>
-  <script type="text/javascript">
-  google.load("feeds", "1");
-
-  window.addEventListener("load", function() {
-
-    var reader = new FeedReader([
-      {name: "Hacker News", url: "http://news.ycombinator.com/rss"},
-      {name: "Railscasts", url: "http://feeds.feedburner.com/railscasts"},
-      {name: "Google Blog", url: "http://googleblog.blogspot.com/atom.xml"},
-      {name: "Engadget", url: "http://feeds.engadget.com/weblogsinc/engadget"},
-      {name: "Techcrunch", url: "http://feeds.feedburner.com/Techcrunch"}
-    ]);
-
-  });
-  </script>
 
 </body>
 </html>
